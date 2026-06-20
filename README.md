@@ -171,26 +171,52 @@ Response:
 
 ## Architecture
 
-Request Flow:
+
 
 ```text
 User Question
-      ↓
-Intent Classification
-      ↓
-Schema Extraction
-      ↓
-SQL Generation
-      ↓
-SQL Validation
-      ↓
-Database Execution
-      ↓
-Table Extraction
-      ↓
-Answer Generation
-      ↓
-Response
+      │
+      ▼
+app.py (Main API Entry Point)
+      │
+      ▼
+auth.py
+(API Key Validation)
+      │
+      ▼
+intent_classifier.py
+(READ / WRITE / INVALID)
+      │
+      ▼
+schema_extractor.py
+(Get Database Schema)
+      │
+      ▼
+query_processing.py
+(Groq → Generate SQL)
+      │
+      ▼
+validator.py
+(SQL Security Validation)
+      │
+      ▼
+database.py
+(Execute SQL on SQLite)
+      │
+      ▼
+table_extractor.py
+(Extract Tables Used)
+      │
+      ▼
+schema_validator.py
+(Validate Tables Exist)
+      │
+      ▼
+answer_generator.py
+(Convert Result → Business Answer)
+      │
+      ▼
+JSON Response
 ```
 
 ## LLM Choice
